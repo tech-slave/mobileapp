@@ -7,7 +7,6 @@ import 'package:techslave/loginscreen.dart';
 import 'package:techslave/models/post.dart';
 import 'package:techslave/profilescreen.dart';
 
-
 import 'package:techslave/signupscreen.dart';
 import 'package:techslave/welcomescreen.dart';
 
@@ -32,6 +31,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Firebase App',
       theme: ThemeData(useMaterial3: true),
       initialRoute: '/',

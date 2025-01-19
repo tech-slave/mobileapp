@@ -13,6 +13,7 @@ class _SignupscreenState extends State<Signupscreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
+  bool _obscureText = true;
   final AuthService _authService = AuthService();
 
   String? validateEmail(String? email) {
@@ -24,13 +25,14 @@ class _SignupscreenState extends State<Signupscreen> {
 
   // Password validation function
   String? validatePassword(String? password) {
-    if (password == null ||
-        password.isEmpty ||
-        password.length < 6 ||
+    if (password == null || password.isEmpty) {
+      return 'Enter a Password';
+    } else if (password.length < 6 ||
         !RegExp(r'[A-Za-z]').hasMatch(password) ||
         !RegExp(r'[0-9]').hasMatch(password)) {
       return 'Password must be at least 6 characters long and include a number and a letter';
     }
+
     return null;
   }
 
@@ -62,6 +64,9 @@ class _SignupscreenState extends State<Signupscreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                SizedBox(
+                  height: 60,
+                ),
                 TextFormField(
                   controller: _emailController,
                   decoration: _buildInputDecoration('Email', Icons.email),
@@ -70,7 +75,10 @@ class _SignupscreenState extends State<Signupscreen> {
                 const SizedBox(height: 20),
                 TextFormField(
                   controller: _passwordController,
-                  decoration: _buildInputDecoration('Password', Icons.lock),
+                  decoration: _buildInputDecoration(
+                    'Password',
+                    Icons.lock,
+                  ),
                   obscureText: true,
                   validator: validatePassword,
                 ),
@@ -104,7 +112,9 @@ class _SignupscreenState extends State<Signupscreen> {
                         Navigator.pushReplacementNamed(context, '/home');
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Sign Up Failed')),
+                          const SnackBar(
+                              content:
+                                  Text('The Account is alreaady rergisterd')),
                         );
                       }
                     }
@@ -138,13 +148,31 @@ class _SignupscreenState extends State<Signupscreen> {
   InputDecoration _buildInputDecoration(String label, IconData suffixIcon) {
     return InputDecoration(
       fillColor: Colors.blueGrey.withOpacity(0.4),
-      focusedBorder:
-          const OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(30.0),
+        borderSide: const BorderSide(
+          color: Colors.white, // Border color when focused
+          width: 2.5, // Increased border width when focused
+        ),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(30.0),
+        borderSide: const BorderSide(
+          color: Color(0x80FFFFFF) // 50% opacity (80 in hex)
+          , // Border color when enabled
+          width: 2.0, // Increased border width
+        ),
+      ),
+      // focusedBorder:
+      //     const OutlineInputBorder(borderSide: BorderSide(color: Colors.white,),
+      //     ),
       filled: true,
       labelStyle: const TextStyle(color: Colors.black),
       labelText: label,
       suffixIcon: Icon(suffixIcon, color: Colors.black),
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0)),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(30.0),
+      ),
     );
   }
 }

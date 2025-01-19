@@ -101,7 +101,7 @@ class _LoginscreenState extends State<Loginscreen> {
                     return Signupscreen();
                   }));
                 },
-                child: Text("Signup"),
+                child: Text("Sign up"),
               ),
             ],
           ),
@@ -112,12 +112,29 @@ class _LoginscreenState extends State<Loginscreen> {
 
   InputDecoration _buildInputDecoration(String label, IconData suffixIcon) {
     return InputDecoration(
+      
       fillColor: Colors.blueGrey.withOpacity(0.4),
       // enabledBorder: const OutlineInputBorder(
       //     borderSide: BorderSide(color: Color(0x35949494))),
-      focusedBorder:
-          const OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(30.0),
+        borderSide: const BorderSide(
+          color: Colors.white, // Border color when focused
+          width: 2.5, // Increased border width when focused
+        ),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(30.0),
+        borderSide: const BorderSide(
+          color: Color(0x80FFFFFF) // 50% opacity (80 in hex)
+          , // Border color when enabled
+          width: 2.0, // Increased border width
+        ),
+      ),
+    
+          
       filled: true,
+      
       labelStyle: const TextStyle(color: Colors.black),
       labelText: label,
       suffixIcon: Icon(suffixIcon, color: Colors.black),
